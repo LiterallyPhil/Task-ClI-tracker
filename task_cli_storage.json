@@ -7,17 +7,10 @@
         "UpdatedAt": "2026-06-04 17:21"
     },
     {
-        "ID": 3,
-        "description": "Buy socks",
-        "status": "in progress",
-        "createdAt": "2026-06-04 17:03",
-        "UpdatedAt": "2026-06-04 17:03"
-    },
-    {
         "ID": 4,
-        "description": "Buy groceries",
+        "description": "wakakawa",
         "status": "todo",
         "createdAt": "2026-06-05 11:27",
-        "UpdatedAt": "2026-06-05 11:27"
+        "UpdatedAt": "2026-06-05 16:49"
     }
 ]

@@ -5,6 +5,49 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+
+def display_tasks(tasks):
+    if not tasks:
+        print('No tasks found.')
+        return
+    
+    headers = ["ID","Description", "Status"]
+
+    rows = []
+
+    for task in tasks:
+        row = [str(task["ID"]), task["description"],task["status"] ]
+        rows.append(row)
+
+    
+    col_widths = []
+    
+    for i in range(len(headers)):
+        col_width = max(len(headers[i]), max(len(row[i])for row in rows))
+        col_widths.append(col_width)
+    
+    separator = "+-" + "-+-".join('-' * width for width in col_widths) + "-+"
+
+    print(
+        "| "
+        + " | ".join(headers[i].ljust(col_widths[i]) for i in range(len(headers)))
+        + " |"
+    )
+    print(separator)
+
+    for row in rows:
+        print(
+            "| "
+            + " | ".join(row[i].ljust(col_widths[i]) for i in range(len(row)))
+            + " |"
+        )
+
+    print(separator)
+
+
+
+
+
 def main():
     try:
         STORAGE_FILE = Path(__file__).parent / "task_cli_storage.json"
@@ -35,8 +78,11 @@ def main():
             found = False
             for tsk in tasks:
                 if tsk['ID'] == task_id:
+                    display_tasks([tsk])
                     tsk["description"] = sys.argv[3]
                     tsk["UpdatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M")
+                    print("changed to->")
+                    display_tasks([tsk])
                     found = True
                     break
 
@@ -54,12 +100,13 @@ def main():
             for tsk in tasks:
                 if tsk['ID'] == task_id:
                     found = True
+                    display_tasks([tsk])
+                    print('deleted successfully')
                     tasks.remove(tsk)
                     break
                 
             if not found:
                 raise ValueError(f"Task with ID {task_id} not found")
-            
             with open(STORAGE_FILE, "w") as file:
                 json.dump(tasks, file, indent=4)
         elif command == 'mark-in-progress':
@@ -96,32 +143,31 @@ def main():
             with open(STORAGE_FILE, "w") as file:
                 json.dump(tasks, file, indent=4)
         elif command == 'list':
-            print('-'* 35)
-            print('| Task |  description  |  status  |')
-            print('-'* 35)
             if len(sys.argv) == 2:
-                for tsk in tasks:
-                    print(f"   {tsk['ID']}.  | {tsk['description']} | {tsk['status']}")
-                sys.exit(0)
-
-            if sys.argv[2] == 'done':
+                display_tasks(tasks)
+                return
+           
+            elif sys.argv[2] == 'done':
+                done_tasks = []
                 for tsk in tasks:
                     if tsk["status"] == 'done':
-                        print(f"   {tsk['ID']}.  | {tsk['description']} | {tsk['status']}")
-                        continue
-                sys.exit(0)
+                        done_tasks.append(tsk)
+                display_tasks(done_tasks)
+
             elif sys.argv[2] == 'todo':
+                todo_tasks = []
                 for tsk in tasks:
                     if tsk["status"] == 'todo':
-                        print(f"   {tsk['ID']}.  | {tsk['description']} | {tsk['status']}")
-                        continue
-                sys.exit(0)
+                        todo_tasks.append(tsk)
+                display_tasks(todo_tasks)
+            
             elif sys.argv[2] == 'in-progress':
+                ongoing_tasks = []
                 for tsk in tasks:
                     if tsk["status"] == 'in progress':
-                        print(f"   {tsk['ID']}.  | {tsk['description']} | {tsk['status']}")
-                        continue
-                sys.exit(0)
+                        ongoing_tasks.append(tsk)
+                display_tasks (ongoing_tasks)
+                
             else:
                 return 'command not found or bad usage'
     except IndexError:
