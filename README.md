@@ -1,22 +1,24 @@
 # Task CLI
 
+Project URL: https://github.com/LiterallyPhil/Task-ClI-tracker
+
 A simple command-line task tracker written in Python. Tasks are stored locally in a `storage.json` file.
 
 ## Features
 
-* Add new tasks
-* Update task descriptions
-* Delete tasks
-* Mark tasks as in progress
-* Mark tasks as done
-* List all tasks
-* Filter tasks by status
-* Generate unique task IDs safely
+- Add new tasks
+- Update task descriptions
+- Delete tasks
+- Mark tasks as in progress
+- Mark tasks as done
+- List all tasks
+- Filter tasks by status
+- Generate unique task IDs safely
 
 ## Requirements
 
-* Python 3
-* A `storage.json` file in the same directory as the script
+- Python 3
+- A `storage.json` file in the same directory as the script
 
 Create `storage.json` before running the program:
 
@@ -98,11 +100,11 @@ Each task is stored as an object inside `storage.json`:
 
 ```json
 {
-    "ID": 1,
-    "description": "Buy groceries",
-    "status": "todo",
-    "createdAt": "2026-06-05 14:30",
-    "UpdatedAt": "2026-06-05 14:30"
+  "ID": 1,
+  "description": "Buy groceries",
+  "status": "todo",
+  "createdAt": "2026-06-05 14:30",
+  "UpdatedAt": "2026-06-05 14:30"
 }
 ```
 
@@ -120,8 +122,8 @@ For example, if `storage.json` contains:
 
 ```json
 [
-    { "ID": 1, "description": "First task" },
-    { "ID": 3, "description": "Third task" }
+  { "ID": 1, "description": "First task" },
+  { "ID": 3, "description": "Third task" }
 ]
 ```
 
@@ -139,7 +141,7 @@ ID: 3
 
 ## Notes
 
-* The program expects `storage.json` to already exist.
-* Task statuses are stored as `todo`, `in progress`, or `done`.
-* Use quotes around task descriptions that contain spaces.
-* IDs are not reused after deletion, which helps avoid confusion.
+- The program expects `storage.json` to already exist.
+- Task statuses are stored as `todo`, `in progress`, or `done`.
+- Use quotes around task descriptions that contain spaces.
+- IDs are not reused after deletion, which helps avoid confusion.
