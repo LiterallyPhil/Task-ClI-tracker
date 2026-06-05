@@ -1,6 +1,6 @@
 # Task CLI
 
-Project URL: https://github.com/LiterallyPhil/Task-ClI-tracker
+Project URL: https://roadmap.sh/projects/task-tracker
 
 A simple command-line task tracker written in Python. Tasks are stored locally in a `storage.json` file.
 
