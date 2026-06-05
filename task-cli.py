@@ -7,7 +7,7 @@ def main():
         command = sys.argv[1]
         with open("storage.json",'r') as file:
             tasks = json.load(file)
-            id = len(tasks) + 1
+            id = max((task["ID"] for task in tasks), default=0) + 1
         if command == 'add':
             task ={
                     "ID": id,
