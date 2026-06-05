@@ -1,11 +1,18 @@
+#!/usr/bin/env python3
+
 import sys
 import json
 from datetime import datetime
+from pathlib import Path
 
 def main():
     try:
+        STORAGE_FILE = Path(__file__).parent / "task_cli_storage.json"
+
+        if not STORAGE_FILE.exists():
+            STORAGE_FILE.write_text("[]")
         command = sys.argv[1]
-        with open("storage.json",'r') as file:
+        with open(STORAGE_FILE,'r') as file:
             tasks = json.load(file)
             id = max((task["ID"] for task in tasks), default=0) + 1
         if command == 'add':
@@ -17,7 +24,7 @@ def main():
                     "UpdatedAt": datetime.now().strftime("%Y-%m-%d %H:%M")
                    }
             tasks.append(task)
-            with open("storage.json", "w") as file:
+            with open(STORAGE_FILE, "w") as file:
                 json.dump(tasks, file, indent=4)
             print (f'Task added successfully (ID: {id})')
 
@@ -36,7 +43,7 @@ def main():
             if not found:
                 raise ValueError(f"Task with ID {task_id}")
             
-            with open("storage.json", "w") as file:
+            with open(STORAGE_FILE, "w") as file:
                 json.dump(tasks, file, indent=4)
 
         elif command == 'delete':
@@ -53,7 +60,7 @@ def main():
             if not found:
                 raise ValueError(f"Task with ID {task_id} not found")
             
-            with open("storage.json", "w") as file:
+            with open(STORAGE_FILE, "w") as file:
                 json.dump(tasks, file, indent=4)
         elif command == 'mark-in-progress':
             if len(sys.argv) != 3:
@@ -69,7 +76,7 @@ def main():
             if not found:
                 raise ValueError(f"Task with ID {task_id} not found")
             
-            with open("storage.json", "w") as file:
+            with open(STORAGE_FILE, "w") as file:
                 json.dump(tasks, file, indent=4)
         elif command == 'mark-done':
             if len(sys.argv) != 3:
@@ -86,7 +93,7 @@ def main():
             if not found:
                 raise ValueError(f"Task with ID {task_id} not found")
             
-            with open("storage.json", "w") as file:
+            with open(STORAGE_FILE, "w") as file:
                 json.dump(tasks, file, indent=4)
         elif command == 'list':
             print('-'* 35)
